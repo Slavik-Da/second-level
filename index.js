@@ -12,14 +12,13 @@ fetch(API_URL)
 .then(file => {
     const fighters = JSON.parse(atob(file.content));
     const names = fighters.map(it => it.name).join('\n');
-
     rootElement.innerText = names;
-    loadingElement.remove();
-
 })
 .catch(error => {
     console.warn(error);
     root.innerText = 'Failed to load data';
-    loadingElement.remove();
 
+  })
+  .finally(() => {
+    loadingElement.remove(); 
   });
