@@ -69,6 +69,9 @@ function createElement({ tagName, className = '', attributes = {} }) {
     const imageElement = createImage(source);
     const element = createElement({ tagName: 'div', className: 'fighter' });
   
+    element.addEventListener('click', (event) => handleFighterClick(event, 'wrapper'), false)
+    imageElement.addEventListener('click', (event) => handleFighterClick(event, 'image'), false)
+  
     element.append(imageElement, nameElement);
   
     return element;
@@ -76,9 +79,7 @@ function createElement({ tagName, className = '', attributes = {} }) {
   function createFighters(fighters) {
     const fighterElements = fighters.map(fighter => createFighter(fighter));
     const element = createElement({ tagName: 'div', className: 'fighters' });
-    element.addEventListener('click', (event) => handleFighterClick(event, 'wrapper'), false)
-    imageElement.addEventListener('click', (event) => handleFighterClick(event, 'image'), false)
-  
+ 
     element.append(...fighterElements);
   
     return element;
