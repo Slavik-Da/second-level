@@ -76,12 +76,17 @@ function createElement({ tagName, className = '', attributes = {} }) {
   function createFighters(fighters) {
     const fighterElements = fighters.map(fighter => createFighter(fighter));
     const element = createElement({ tagName: 'div', className: 'fighters' });
+    element.addEventListener('click', (event) => handleFighterClick(event, 'wrapper'), false)
+    imageElement.addEventListener('click', (event) => handleFighterClick(event, 'image'), false)
   
     element.append(...fighterElements);
   
     return element;
   }
-
+  
+  function handleFighterClick(event, el) {
+    console.log(el);
+  }
 
 function getFightersNames(fighters) {
   const names = fighters.map(it => it.name).join('\n');
