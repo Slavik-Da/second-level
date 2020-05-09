@@ -1,4 +1,4 @@
-const API_URL = 'https://api.git--hub.com/';
+const API_URL = 'https://api.github.com/';
 const rootElement = document.getElementById('root');
 const loadingElement = document.getElementById('loading-overlay');
 async function startApp() {
@@ -32,6 +32,18 @@ async function startApp() {
       .then(file => JSON.parse(atob(file.content)))
       .catch(error => { throw error });
   }
+
+function createElement({ tagName, className = '', attributes = {} }) {
+    const element = document.createElement(tagName);
+    element.classList.add(className);
+      
+    Object
+      .keys(attributes)
+      .forEach(key => element.setAttribute(key, attributes[key]));
+  
+    return element;
+  }
+
 
 function getFightersNames(fighters) {
   const names = fighters.map(it => it.name).join('\n');
