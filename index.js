@@ -1,3 +1,7 @@
 const API_URL = 'https://api.github.com/repos/sahanr/street-fighter/contents/fighters.json';
-const responsePromise = fetch(API_URL);
-responsePromise.then(response => { console.log(response) });
+fetch(API_URL)
+.then(response => response.json())
+.then(file => {
+    const fighters = JSON.parse(atob(file.content));
+    console.log(fighters);
+});
