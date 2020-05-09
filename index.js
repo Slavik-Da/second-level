@@ -44,6 +44,24 @@ function createElement({ tagName, className = '', attributes = {} }) {
     return element;
   }
 
+  function createName(name) {
+    const nameElement = createElement({ tagName: 'span', className: 'name' });
+    nameElement.innerText = name;
+  
+    return nameElement;
+  }
+  
+  function createImage(source) {
+    const attributes = { src: source };
+    const imgElement = createElement({
+      tagName: 'img',
+      className: 'fighter-image',
+      attributes
+    });
+  
+    return imgElement;
+  }
+
 
 function getFightersNames(fighters) {
   const names = fighters.map(it => it.name).join('\n');
