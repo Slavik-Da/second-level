@@ -16,7 +16,6 @@ function callApi(endpoind, method) {
           ? response.json() 
           : Promise.reject(Error('Failed to load'))
       )
-      .then(file => JSON.parse(atob(file.content)))
       .catch(error => { throw error });
   }
 
@@ -88,6 +87,8 @@ function callApi(endpoind, method) {
   class FightersView extends View {
     constructor(fighters) {
       super();
+      this.handleClick = this.handleFighterClick.bind(this);
+
       
       this.createFighters(fighters);
     }
@@ -96,7 +97,7 @@ function callApi(endpoind, method) {
   
     createFighters(fighters) {
       const fighterElements = fighters.map(fighter => {
-        const fighterView = new FighterView(fighter, this.handleFighterClick);
+        const fighterView = new FighterView(fighter, this.handleClick);
         return fighterView.element;
       });
   
