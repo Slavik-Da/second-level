@@ -1,6 +1,9 @@
 const API_URL = 'https://api.github.com/';
 const rootElement = document.getElementById('root');
 const loadingElement = document.getElementById('loading-overlay');
+const fightersDetailsMap = new Map();
+
+
 async function startApp() {
     try {
       loadingElement.style.visibility = 'visible';
@@ -34,64 +37,17 @@ async function startApp() {
       .catch(error => { throw error });
   }
 
-function createElement({ tagName, className = '', attributes = {} }) {
-    const element = document.createElement(tagName);
-    element.classList.add(className);
-      
-    Object
-      .keys(attributes)
-      .forEach(key => element.setAttribute(key, attributes[key]));
+  class FighterService {
+    async getFighters() {
+      try {
+        const endpoint = 'repos/sahanr/street-fighter/contents/fighters.json';
+        const apiResult = await callApi(endpoint, 'GET');
   
-    return element;
-  }
-
-  function createName(name) {
-    const nameElement = createElement({ tagName: 'span', className: 'name' });
-    nameElement.innerText = name;
-  
-    return nameElement;
+        return JSON.parse(atob(apiResult.content));
+      } catch (error) {
+        throw error;
+      }
+    }
   }
   
-  function createImage(source) {
-    const attributes = { src: source };
-    const imgElement = createElement({
-      tagName: 'img',
-      className: 'fighter-image',
-      attributes
-    });
-  
-    return imgElement;
-  }
-
-  function createFighter(fighter) {
-    const { name, source } = fighter;
-    const nameElement = createName(name);
-    const imageElement = createImage(source);
-    const element = createElement({ tagName: 'div', className: 'fighter' });
-  
-    element.addEventListener('click', (event) => handleFighterClick(event, 'wrapper'), false)
-    imageElement.addEventListener('click', (event) => handleFighterClick(event, 'image'), false)
-  
-    element.append(imageElement, nameElement);
-  
-    return element;
-  }
-  function createFighters(fighters) {
-    const fighterElements = fighters.map(fighter => createFighter(fighter));
-    const element = createElement({ tagName: 'div', className: 'fighters' });
- 
-    element.append(...fighterElements);
-  
-    return element;
-  }
-  
-  function handleFighterClick(event, el) {
-    console.log(el);
-  }
-
-function getFightersNames(fighters) {
-  const names = fighters.map(it => it.name).join('\n');
-  return names;
-}
-
-startApp();
+  const fighterService = new FighterService();
